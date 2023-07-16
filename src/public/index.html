@@ -16,19 +16,29 @@
         <div class="d-flex justify-content-center align-items-center">
             <form id="form" method="post" class="d-flex flex-column gap-3">
                 <label for="name" class="d-flex flex-column"> Nombre:
-                    <input type="text" name="name" class="mx-2" required>
+                    <input id="name" type="text" name="name"required>
                 </label>
                 <label for="location" class="d-flex flex-column"> Ubicación:
-                    <input type="text" name="location" required>
+                    <input id="location" type="text" name="location"  placeholder="Ej: Country, city, street">
+                    <small>Separa Pais, ciudad y calle con una coma.</small>
                 </label>
                 <label for="category" class="d-flex flex-column"> Categoria:
-                    <input type="text" name="category" required>
+                    <input id="category" type="text" name="category"  placeholder="Ej:Sea food, italian, mexican">
+                    <small>Separa cada categoria con una coma.</small>
                 </label>
+                <div class="container d-flex justify-content-between align-items-center gap-5">
+                    <label for="open" class="d-flex flex-column"> Abre:
+                        <input id="open" type="time" name="open" >
+                    </label>
+                    <label for="close" class="d-flex flex-column"> Cierra:
+                        <input id="close" type="time" name="close" >
+                    </label>
+                </div>
                 <label for="stars" class="d-flex flex-column"> Calificación:
-                    <input type="number" name="stars" required max="5" min="0">
+                    <input id="stars" type="number" name="stars" max="5" min="0">
                 </label>
                 <label for="comments" class="d-flex flex-column"> Comentarios:
-                    <textarea type="text" name="comments" cols="25" rows="3"></textarea>
+                    <textarea id="comments" type="text" name="comments" cols="25" rows="3"></textarea>
                 </label>
                 <div class="m-auto" id="btns-container">
                     <input type="submit" value="Agregar" class="btn btn-primary">
