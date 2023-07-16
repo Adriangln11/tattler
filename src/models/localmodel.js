@@ -2,10 +2,12 @@ const mongoose = require('mongoose')
 
 const LocalSchema = mongoose.Schema({
     name: { type: String, required: true },
-    location: { type: String, required: true},
-    category: { type: String, required: true},
-    comments: { type: String},
-    stars: { type: Number, required: true}
+    location: { type: Object},
+    category: { type: [String], default:[]},
+    comments: { type: [String]},
+    stars: { type: [Number], default: []},
+    schedules: { type: Object, default:{}},
+    ranking: { type: Number}
 })
 
 module.exports = mongoose.model('LocalModel', LocalSchema)
