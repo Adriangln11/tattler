@@ -15,12 +15,14 @@
         
         <div class="d-flex justify-content-center align-items-center">
             <form id="form" method="post" class="d-flex flex-column gap-3">
-                <label for="name" class="d-flex flex-column"> Nombre:
+                
+                <label for="name" class="d-flex flex-column"><i class="text-danger position-absolute translate-middle fs-4">*</i>Nombre:
+                    
                     <input id="name" type="text" name="name"required>
                 </label>
                 <label for="location" class="d-flex flex-column"> Ubicación:
-                    <input id="location" type="text" name="location"  placeholder="Ej: Country, city, street">
-                    <small>Separa Pais, ciudad y calle con una coma.</small>
+                    <input id="location" type="text" name="location"  placeholder="Ej: State, city, street">
+                    <small>Separa estado, ciudad y calle con una coma.</small>
                 </label>
                 <label for="category" class="d-flex flex-column"> Categoria:
                     <input id="category" type="text" name="category"  placeholder="Ej:Sea food, italian, mexican">

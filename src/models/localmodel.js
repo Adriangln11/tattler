@@ -7,7 +7,7 @@ const LocalSchema = mongoose.Schema({
     comments: { type: [String]},
     stars: { type: [Number], default: []},
     schedules: { type: Object, default:{}},
-    ranking: { type: Number}
+    ranking: { type: Number, default: 0}
 })
 
 module.exports = mongoose.model('LocalModel', LocalSchema)
