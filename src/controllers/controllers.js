@@ -79,27 +79,43 @@ const deleteLocal = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
     const data = await LocalModel.find()
-    return res.json({ message: 'Completed successfully', data })
+    return res.json({ message: 'Completed successfully', results: data.length, data })
 }
-const filterByIdNameRank = async (req, res, next) => {
-    const { _id, name, ranking } = req.query
-    const data = {}
-    _id ? (data._id = _id) : false
-    name ? (data.name = name) : false
-    ranking ? (data.ranking = ranking) : false
+const filter = async (req, res, next) => {
+    const { _id, name, open, category, state, city, street} = req.query
+    const queries = {}
+    _id ? (queries._id = _id) : false
+    name ? (queries.name = name) : false
+    open ? (queries["schedules.open"] = open) : false
+    state ? (queries["location.state"] = state) : false
+    city ? (queries["location.city"] = city) : false
+    street ? (queries["location.street"] = street) : false
+    category ? (queries["category"] = { $in: [category] }) : false
     try {
-        const doc = await LocalModel.findOne(data)
-        if (doc) return res.json({ message: 'Completed successfully', doc })
+        const doc = await LocalModel.find(queries)
+        if (doc.length != 0) return res.json({ message: 'Completed successfully', results: doc.length, data: doc })
         return res.json({ message: 'Local not found' })
     } catch (error) {
         return res.json({ message: "The local doesn't exist" })
     }
 }
-
+const sort = async (req, res, next) => {
+    try{ 
+        const data = await LocalModel.aggregate(
+            [
+                {$sort: {ranking: 1}}
+            ]
+        )
+        return res.json({message: 'Complete successfully', results: data.length, data})
+    }catch (error) {
+        return res.json({ message: 'Error getting results'})
+    }
+}
 module.exports = {
     createLocal,
     editLocal,
     deleteLocal,
     getAll,
-    filterByIdNameRank,
+    filter,
+    sort,
 }
