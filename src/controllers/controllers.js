@@ -103,7 +103,7 @@ const sort = async (req, res, next) => {
     try{ 
         const data = await LocalModel.aggregate(
             [
-                {$sort: {ranking: 1}}
+                {$sort: {ranking: -1}}
             ]
         )
         return res.json({message: 'Complete successfully', results: data.length, data})
