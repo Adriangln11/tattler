@@ -1,6 +1,7 @@
 const express = require('express')
-const router = require('./routes/router.js')
+const { swaggerDocs: v1Docs } = require('./docs/swagger')
 const path = require('path')
+const router = require('./routes/router.js')
 require('./db/db.js') 
 
 const app = express()
@@ -19,4 +20,7 @@ app.get('/api', (req, res) => {
 app.use('/api', router)
 
 
-app.listen(app.get('port'), console.log(`Server listening on ${app.get('port')}`))
+app.listen(app.get('port'), () => {
+    console.log(`🚀 Server listening on ${app.get('port')}`)
+    v1Docs(app, app.get('port'))
+})
