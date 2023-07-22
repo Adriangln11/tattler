@@ -56,8 +56,8 @@ const scheemaDoc = {
             type: 'object',
             description: 'The schedules object of the local.',
             example: {
-                open: '9:00 AM',
-                close: '5:00 PM',
+                open: '9:00',
+                close: '5:00',
             },
         },
         ranking: {
@@ -69,7 +69,7 @@ const scheemaDoc = {
 }
 
 const newLocalDoc = {
-    '/new-local': {
+    '/api/new-local': {
         post: {
             summary: 'Create a new local.',
             tags: ['Locals'],
@@ -188,7 +188,7 @@ const newLocalDoc = {
     },
 }
 const editLocalDoc = {
-    '/edit-local': {
+    '/api/edit-local': {
         put: {
             summary: 'Edit an existing local.',
             tags: ['Locals'],
@@ -307,7 +307,7 @@ const editLocalDoc = {
     },
 }
 const deleteLocalDoc = {
-    '/delete-local': {
+    '/api/delete-local': {
         delete: {
             summary: 'Delete a local.',
             tags: ['Locals'],
@@ -368,10 +368,247 @@ const deleteLocalDoc = {
         },
     },
 }
+const getAllDoc = {
+    '/api/locals': {
+        get: {
+            summary: 'Get all locals.',
+            tags: ['Locals'],
+            responses: {
+                200: {
+                    description: 'Successfully retrieved all locals.',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    message: {
+                                        type: 'string',
+                                        description: 'A success message.',
+                                        example: 'Completed successfully',
+                                    },
+                                    results: {
+                                        type: 'number',
+                                        description: 'Number of results.',
+                                        example: 3,
+                                    },
+                                    data: {
+                                        type: 'array',
+                                        description: 'Array of local objects.',
+                                        items: {
+                                            $ref: '#/components/schemas/Local',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                400: {
+                    description: 'Bad request. Missing or invalid parameters.',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    message: {
+                                        type: 'string',
+                                        description: 'An error message.',
+                                        example: 'Error getting results',
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+}
+const filterDoc = {
+    '/api/locals/search/': {
+        get: {
+            summary: 'Search locals based on filters.',
+            tags: ['Locals'],
+            parameters: [
+                {
+                    in: 'query',
+                    name: '_id',
+                    schema: {
+                        type: 'string',
+                    },
+                    description: 'Filter by _id.',
+                    example: '61684e8a74e343001f5e188d',
+                },
+                {
+                    in: 'query',
+                    name: 'name',
+                    schema: {
+                        type: 'string',
+                    },
+                    description: 'Filter by name.',
+                    example: 'Local Coffee Shop',
+                },
+                {
+                    in: 'query',
+                    name: 'open',
+                    schema: {
+                        type: 'string',
+                    },
+                    description: 'Filter by opening time.',
+                    example: '9:00',
+                },
+                {
+                    in: 'query',
+                    name: 'category',
+                    schema: {
+                        type: 'string',
+                    },
+                    description: 'Filter by category.',
+                    example: 'Café',
+                },
+                {
+                    in: 'query',
+                    name: 'state',
+                    schema: {
+                        type: 'string',
+                    },
+                    description: 'Filter by state.',
+                    example: 'California',
+                },
+                {
+                    in: 'query',
+                    name: 'city',
+                    schema: {
+                        type: 'string',
+                    },
+                    description: 'Filter by city.',
+                    example: 'Los Angeles',
+                },
+                {
+                    in: 'query',
+                    name: 'street',
+                    schema: {
+                        type: 'string',
+                    },
+                    description: 'Filter by street.',
+                    example: 'Main Street',
+                },
+            ],
+            responses: {
+                200: {
+                    description: 'Successfully retrieved filtered locals.',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    message: {
+                                        type: 'string',
+                                        description: 'A success message.',
+                                        example: 'Completed successfully',
+                                    },
+                                    results: {
+                                        type: 'number',
+                                        description: 'Number of results.',
+                                        example: 3,
+                                    },
+                                    data: {
+                                        type: 'array',
+                                        description: 'Array of local objects.',
+                                        items: {
+                                            $ref: '#/components/schemas/Local',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                404: {
+                    description: 'No locals found matching the filters.',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    message: {
+                                        type: 'string',
+                                        description: 'An error message.',
+                                        example: 'Local not found',
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+}
+const sortDoc = {
+    '/api/locals/sort': {
+        get: {
+            summary: 'Sort locals by ranking.',
+            tags: ['Locals'],
+            responses: {
+                200: {
+                    description: 'Successfully sorted locals by ranking.',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    message: {
+                                        type: 'string',
+                                        description: 'A success message.',
+                                        example: 'Complete successfully',
+                                    },
+                                    results: {
+                                        type: 'number',
+                                        description: 'Number of results.',
+                                        example: 3,
+                                    },
+                                    data: {
+                                        type: 'array',
+                                        description:
+                                            'Array of local objects sorted by ranking.',
+                                        items: {
+                                            $ref: '#/components/schemas/Local',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                400: {
+                    description: 'Bad request. Missing or invalid parameters.',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    message: {
+                                        type: 'string',
+                                        description: 'An error message.',
+                                        example: 'Error getting results',
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+}
 
 module.exports = {
     newLocalDoc,
     scheemaDoc,
     editLocalDoc,
     deleteLocalDoc,
+    getAllDoc,
+    filterDoc,
+    sortDoc,
 }

@@ -1,6 +1,6 @@
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
-const { newLocalDoc, scheemaDoc, editLocalDoc, deleteLocalDoc } = require('./routesDocs.js')
+const { newLocalDoc, scheemaDoc, editLocalDoc, deleteLocalDoc, getAllDoc, filterDoc, sortDoc } = require('./docs.js')
 
 const options = {
     definition: {
@@ -14,7 +14,7 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:3000/',
+                url: 'tattler-api.onrender.com',
             },
         ],
         components: {
@@ -27,15 +27,15 @@ const options = {
 }
 
 const swaggerSpec = swaggerJsDoc(options)
-swaggerSpec.paths = { ...swaggerSpec.paths, ...newLocalDoc, ...editLocalDoc, ...deleteLocalDoc }
+swaggerSpec.paths = { ...swaggerSpec.paths, ...newLocalDoc, ...editLocalDoc, ...deleteLocalDoc, ...getAllDoc, ...filterDoc, ...sortDoc }
 
-const swaggerDocs = (app, port) => {
+const swagger = (app, port) => {
     app.use('/api/docs/v1', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
     app.get('/api/docs/v1.json', (req, res) => {
         res.setHeader('Content-Type', 'application/json')
         res.send(swaggerSpec)
     })
-    console.log('📚 Documentation is available at /api/docs/v1')
+    console.log('📚 Documentation is available at https://tattler-api.onrender.com/api/docs/v1/')
 }
 
-module.exports = { swaggerDocs }
+module.exports = { swagger }

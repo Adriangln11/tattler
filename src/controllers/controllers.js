@@ -76,6 +76,16 @@ const deleteLocal = async (req, res, next) => {
         return res.json({ message: 'Error deleting document' })
     }
 }
+const deleteLocalJson = async (req, res, next) => {
+    const { _id } = req.params
+    try {
+        await LocalModel.deleteOne({ _id })
+        return res.json({ message: 'Deleted successfully' })
+    } catch (error) {
+        console.log(error)
+        return res.json({ message: 'Error deleting document' })
+    }
+}
 
 const getAll = async (req, res, next) => {
     const data = await LocalModel.find()
@@ -115,6 +125,7 @@ module.exports = {
     createLocal,
     editLocal,
     deleteLocal,
+    deleteLocalJson,
     getAll,
     filter,
     sort,

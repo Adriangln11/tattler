@@ -1,5 +1,5 @@
 const express = require('express')
-const { swaggerDocs: v1Docs } = require('./docs/swagger')
+const { swagger: v1Docs } = require('./docs/swagger')
 const path = require('path')
 const router = require('./routes/router.js')
 require('./db/db.js') 
