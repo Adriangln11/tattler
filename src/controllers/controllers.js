@@ -137,7 +137,7 @@ const sort = async (req, res, next) => {
 }
 
 const notFound = (req, res, next) => {
-    return res.render('404')
+    return res.status(404).render('404')
 }
 module.exports = {
     createLocal,
