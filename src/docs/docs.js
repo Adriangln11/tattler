@@ -368,6 +368,62 @@ const deleteLocalDoc = {
         },
     },
 }
+const deleteByIdDoc = {
+    '/api/delete-local/{_id}': {
+        delete: {
+            summary: 'Delete a local by _id.',
+            tags: ['Locals'],
+            parameters: [
+                {
+                    in: 'path',
+                    name: '_id',
+                    schema: {
+                        type: 'string',
+                    },
+                    required: true,
+                    description: 'The _id of the local to be deleted.',
+                    example: '61684e8a74e343001f5e188d',
+                },
+            ],
+            responses: {
+                200: {
+                    description: 'Successfully deleted the local.',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    message: {
+                                        type: 'string',
+                                        description: 'A success message.',
+                                        example: 'Deleted successfully',
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                400: {
+                    description: 'Bad request. Missing or invalid parameters.',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    message: {
+                                        type: 'string',
+                                        description: 'An error message.',
+                                        example: 'Error deleting document',
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+}
 const getAllDoc = {
     '/api/locals': {
         get: {
@@ -608,6 +664,7 @@ module.exports = {
     scheemaDoc,
     editLocalDoc,
     deleteLocalDoc,
+    deleteByIdDoc,
     getAllDoc,
     filterDoc,
     sortDoc,

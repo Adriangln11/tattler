@@ -47,6 +47,7 @@
                     <input type="submit" value="Eliminar" class="btn btn-danger">
                     <input type="submit" value="Editar" class="btn btn-warning">
                 </div>
+                <small>Documentation available at<a href="/api/docs/v1"> https://tattler-api.onrender.com/api/docs/v1</a></small>
             </form>
         </div>
    
@@ -56,10 +57,12 @@
         const form = document.getElementById("form");
 
         document.getElementById('btns-container').addEventListener("click", (e) => {
-            if (e.target.value === 'Agregar') form.action = '/api/new-local'
+            
+            if (e.target.value === 'Agregar') form.action = '/api/new-local' 
             if (e.target.value === 'Eliminar') form.action = '/api/delete-local'
             if (e.target.value === 'Editar') form.action = '/api/edit-local'
             form.submit()
+            
         })
     </script>
 </body>

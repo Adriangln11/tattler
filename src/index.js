@@ -12,12 +12,15 @@ app.use(require('morgan')('dev'))
 app.use( express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '/public')))
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
 
 //routes
 app.get('/api', (req, res) => {
     return res.json({greeting: 'Hello API!'})
 })
 app.use('/api', router)
+app.use('/', router)
 
 
 app.listen(app.get('port'), () => {

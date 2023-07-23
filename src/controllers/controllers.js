@@ -21,6 +21,7 @@ const createLocal = async (req, res, next) => {
             schedules: { open, close },
             stars: stars.split(','),
             comments: comments.split(','),
+            ranking: (stars / stars.length).toFixed(2),
         })
 
         return res.json({ message: 'Created successfully', data: doc })
@@ -53,8 +54,12 @@ const editLocal = async (req, res, next) => {
             if (key == 'stars' || key == 'category' || key == 'comments') {
                 doc[key] = [...doc[key], newData[key]]
                 if (key == 'stars') {
-                    const score = doc[key].reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-                    doc.ranking = score / doc[key].length
+                    const score = doc[key].reduce(
+                        (accumulator, currentValue) =>
+                            accumulator + currentValue,
+                        0
+                    )
+                    doc.ranking = (score / doc[key].length).toFixed(2)
                 }
             } else {
                 doc[key] = newData[key]
@@ -67,7 +72,7 @@ const editLocal = async (req, res, next) => {
         return res.json({ message: 'Error updating document' })
     }
 }
-const deleteLocal = async (req, res, next) => {
+const deleteLocalbyName = async (req, res, next) => {
     try {
         await LocalModel.deleteOne({ name: req.body.name })
         return res.json({ message: 'Deleted successfully' })
@@ -76,7 +81,7 @@ const deleteLocal = async (req, res, next) => {
         return res.json({ message: 'Error deleting document' })
     }
 }
-const deleteLocalJson = async (req, res, next) => {
+const deleteLocalById = async (req, res, next) => {
     const { _id } = req.params
     try {
         await LocalModel.deleteOne({ _id })
@@ -89,44 +94,58 @@ const deleteLocalJson = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
     const data = await LocalModel.find()
-    return res.json({ message: 'Completed successfully', results: data.length, data })
+    return res.json({
+        message: 'Completed successfully',
+        results: data.length,
+        data,
+    })
 }
 const filter = async (req, res, next) => {
-    const { _id, name, open, category, state, city, street} = req.query
+    const { _id, name, open, category, state, city, street } = req.query
     const queries = {}
     _id ? (queries._id = _id) : false
     name ? (queries.name = name) : false
-    open ? (queries["schedules.open"] = open) : false
-    state ? (queries["location.state"] = state) : false
-    city ? (queries["location.city"] = city) : false
-    street ? (queries["location.street"] = street) : false
-    category ? (queries["category"] = { $in: [category] }) : false
+    open ? (queries['schedules.open'] = open) : false
+    state ? (queries['location.state'] = state) : false
+    city ? (queries['location.city'] = city) : false
+    street ? (queries['location.street'] = street) : false
+    category ? (queries['category'] = { $in: [category] }) : false
     try {
         const doc = await LocalModel.find(queries)
-        if (doc.length != 0) return res.json({ message: 'Completed successfully', results: doc.length, data: doc })
+        if (doc.length != 0)
+            return res.json({
+                message: 'Completed successfully',
+                results: doc.length,
+                data: doc,
+            })
         return res.json({ message: 'Local not found' })
     } catch (error) {
         return res.json({ message: "The local doesn't exist" })
     }
 }
 const sort = async (req, res, next) => {
-    try{ 
-        const data = await LocalModel.aggregate(
-            [
-                {$sort: {ranking: -1}}
-            ]
-        )
-        return res.json({message: 'Complete successfully', results: data.length, data})
-    }catch (error) {
-        return res.json({ message: 'Error getting results'})
+    try {
+        const data = await LocalModel.aggregate([{ $sort: { ranking: -1 } }])
+        return res.json({
+            message: 'Complete successfully',
+            results: data.length,
+            data,
+        })
+    } catch (error) {
+        return res.json({ message: 'Error getting results' })
     }
+}
+
+const notFound = (req, res, next) => {
+    return res.render('404')
 }
 module.exports = {
     createLocal,
     editLocal,
-    deleteLocal,
-    deleteLocalJson,
+    deleteLocalbyName,
+    deleteLocalById,
     getAll,
     filter,
     sort,
+    notFound,
 }

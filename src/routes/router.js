@@ -1,16 +1,18 @@
 const router = require('express').Router()
-const {createLocal, editLocal, deleteLocal, getAll, filter, sort, deleteLocalJson} =  require('../controllers/controllers.js')
+const {createLocal, editLocal, deleteLocalbyName, getAll, filter, sort, deleteLocalById, notFound} =  require('../controllers/controllers.js')
 
 
-router.post('/new-local', createLocal)
+router
+    .post('/new-local', createLocal)
 
-router.post('/delete-local' , deleteLocal)
-router.get('/delete-local/:_id' , deleteLocalJson)
+    .post('/delete-local' , deleteLocalbyName)
+    .get('/delete-local/:_id' , deleteLocalById)
 
-router.post('/edit-local' , editLocal)
-router.get('/locals' , getAll)
-router.get('/locals/search' , filter)
-router.get('/locals/sort' , sort)
+    .post('/edit-local' , editLocal)
+    .get('/locals' , getAll)
+    .get('/locals/search' , filter)
+    .get('/locals/sort' , sort)
+    .get('/:404', notFound)
 
 
 module.exports = router

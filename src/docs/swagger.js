@@ -1,6 +1,6 @@
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
-const { newLocalDoc, scheemaDoc, editLocalDoc, deleteLocalDoc, getAllDoc, filterDoc, sortDoc } = require('./docs.js')
+const { newLocalDoc, scheemaDoc, editLocalDoc, deleteLocalDoc, getAllDoc, filterDoc, sortDoc, deleteByIdDoc } = require('./docs.js')
 
 const options = {
     definition: {
@@ -27,7 +27,15 @@ const options = {
 }
 
 const swaggerSpec = swaggerJsDoc(options)
-swaggerSpec.paths = { ...swaggerSpec.paths, ...newLocalDoc, ...editLocalDoc, ...deleteLocalDoc, ...getAllDoc, ...filterDoc, ...sortDoc }
+swaggerSpec.paths = { 
+    ...swaggerSpec.paths,
+    ...newLocalDoc,
+    ...editLocalDoc,
+    ...deleteLocalDoc,
+    ...deleteByIdDoc,
+    ...getAllDoc,
+    ...filterDoc,
+    ...sortDoc }
 
 const swagger = (app, port) => {
     app.use('/api/docs/v1', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
