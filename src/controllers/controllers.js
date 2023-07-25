@@ -1,5 +1,4 @@
 const LocalModel = require('../models/localmodel.js')
-
 const createLocal = async (req, res, next) => {
     const { name, location, stars, category, comments, open, close } = req.body
     const locationData = location.split(',')
