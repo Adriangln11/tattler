@@ -13,54 +13,61 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-    <title>Tattler</title>
+    <title><%= title %></title>
   </head>
   <body>
-    <h1 class="text-center mt-3">Menú</h1>
+    <nav
+      class="navbar bg-dark border-bottom border-body d-flex justify-space"
+      data-bs-theme="dark"
+    >
+      <h1 class="text-white mx-3">Tattler</h1>
+      <a href="/logout" class="btn btn-danger mx-3">LogOut</a>
+    </nav>
+    <h2 class="text-center mt-3">Menu</h2>
 
     <main class="container-fluid">
       <div class="d-flex justify-content-center align-items-center">
         <form id="form" method="post" class="d-flex flex-column gap-3">
           <label for="name" class="d-flex flex-column"
             ><i class="text-danger position-absolute translate-middle fs-4">*</i
-            >Nombre:
+            >Name:
 
             <input id="name" type="text" name="name" required />
           </label>
           <label for="location" class="d-flex flex-column">
-            Ubicación:
+            Location:
             <input
               id="location"
               type="text"
               name="location"
               placeholder="Ej: State, city, street"
             />
-            <small>Separa estado, ciudad y calle con una coma.</small>
+            <small>Separate state, city, and street with a comma.</small>
           </label>
           <label for="category" class="d-flex flex-column">
-            Categoria:
+            Category:
             <input
               id="category"
               type="text"
               name="category"
               placeholder="Ej:Sea food, italian, mexican"
             />
-            <small>Separa cada categoria con una coma.</small>
+            <small>Separate each category with a comma.</small>
           </label>
           <div
             class="container d-flex justify-content-between align-items-center gap-5"
           >
             <label for="open" class="d-flex flex-column">
-              Abre:
+              Open:
               <input id="open" type="time" name="open" />
             </label>
             <label for="close" class="d-flex flex-column">
-              Cierra:
+              Close:
               <input id="close" type="time" name="close" />
             </label>
           </div>
           <label for="stars" class="d-flex flex-column">
-            Calificación:
+            Stars:
             <input
               id="stars"
               type="number"
@@ -71,7 +78,7 @@
             />
           </label>
           <label for="comments" class="d-flex flex-column">
-            Comentarios:
+            Comments:
             <textarea
               id="comments"
               type="text"
@@ -81,12 +88,12 @@
             ></textarea>
           </label>
           <div class="m-auto" id="btns-container">
-            <input type="submit" value="Agregar" class="btn btn-primary" />
-            <input type="submit" value="Eliminar" class="btn btn-danger" />
-            <input type="submit" value="Editar" class="btn btn-warning" />
+            <input type="submit" value="Resgister" class="btn btn-primary" />
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <input type="submit" value="Edit" class="btn btn-warning" />
           </div>
           <small
-            >Documentación disponible en:
+            >Documentation available at:
             <a href="/api/docs/v1">
               https://tattler-api.onrender.com/api/docs/v1</a
             ></small
@@ -101,9 +108,11 @@
       document
         .getElementById('btns-container')
         .addEventListener('click', (e) => {
-          if (e.target.value === 'Agregar') form.action = '/api/new-local'
-          if (e.target.value === 'Eliminar') form.action = '/api/delete-local'
-          if (e.target.value === 'Editar') form.action = '/api/edit-local'
+          if (e.target.value === 'Resgister')
+            form.action = '/api/locals/new-local'
+          if (e.target.value === 'Delete')
+            form.action = '/api/locals/delete-local'
+          if (e.target.value === 'Edit') form.action = '/api/locals/edit-local'
           form.submit()
         })
     </script>

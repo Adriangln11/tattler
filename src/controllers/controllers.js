@@ -72,8 +72,10 @@ const editLocal = async (req, res, next) => {
 }
 const deleteLocalbyName = async (req, res, next) => {
   try {
-    await LocalModel.deleteOne({ name: req.body.name })
-    return res.json({ message: 'Deleted successfully' })
+    const doc = await LocalModel.deleteOne({ name: req.body.name })
+
+    if (doc.deletedCount) return res.json({ message: 'Deleted successfully' })
+    return res.json({ message: 'Local not found' })
   } catch (error) {
     console.log(error)
     return res.json({ message: 'Error deleting document' })
