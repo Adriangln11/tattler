@@ -1,7 +1,7 @@
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const UserModel = require('../models/usermodel.js')
-const bcrypt = require('bcrypt')
+import passport from 'passport'
+import { Strategy as LocalStrategy } from 'passport-local'
+import UserModel from '../models/usermodel.js'
+import bcrypt from 'bcrypt'
 
 passport.serializeUser(function (user, done) {
   done(null, user.id)

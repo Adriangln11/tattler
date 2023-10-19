@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon src/index.js",
+    "dev": "node --watch src/index.js",
     "start": "node src/index.js"
   },
   "jest": {
@@ -31,8 +32,6 @@
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
-    "morgan": "^1.10.0",
-    "nodemon": "^3.0.1",
-    "standard": "^17.1.0"
+    "morgan": "^1.10.0"
   }
 }

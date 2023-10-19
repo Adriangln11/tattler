@@ -1,5 +1,5 @@
-const { swagger: v1Docs } = require('./docs/swagger.js')
-const app = require('./app.js')
+import { swagger as v1Docs } from './docs/swagger.js'
+import app from './app.js'
 
 app.listen(app.get('port'), () => {
   console.log(`🚀 Server listening on ${app.get('port')}`)

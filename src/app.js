@@ -1,24 +1,29 @@
-const express = require('express')
-const passport = require('passport')
-const flash = require('connect-flash')
-const path = require('path')
-const router = require('./routes/router.js')
-require('./db/db.js')
-require('./auth/auth.js')
+import express from 'express'
+import passport from 'passport'
+import flash from 'connect-flash'
+import session from 'express-session'
+import morgan from 'morgan'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+import router from './routes/router.js'
+import './db/db.js'
+import './auth/auth.js'
 
 const app = express()
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 app.set('port', process.env.PORT || 3000)
 
 //*config
 app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', join(__dirname, 'views'))
 
 //*middlewares
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(require('morgan')('dev'))
+app.use(morgan('dev'))
 app.use(
-  require('express-session')({
+  session({
     secret: 'qwerty',
     resave: true,
     saveUninitialized: true,
@@ -38,4 +43,4 @@ app.use((req, res, next) => {
 
 app.use(router)
 
-module.exports = app
+export default app

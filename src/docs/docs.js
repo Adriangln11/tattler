@@ -649,7 +649,7 @@ const sortDoc = {
   },
 }
 
-module.exports = {
+export {
   newLocalDoc,
   scheemaDoc,
   editLocalDoc,

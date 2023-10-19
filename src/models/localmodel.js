@@ -1,13 +1,16 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
-const LocalSchema = mongoose.Schema({
+const LocalSchema = mongoose.Schema(
+  {
     name: { type: String, required: true },
-    location: { type: Object},
-    category: { type: [String], default:[]},
-    comments: { type: [String]},
-    stars: { type: [Number], default: []},
-    schedules: { type: Object, default:{}},
-    ranking: { type: Number, default: 0}
-})
+    location: { type: Object },
+    category: { type: [String], default: [] },
+    comments: { type: [String] },
+    stars: { type: [Number], default: [] },
+    schedules: { type: Object, default: {} },
+    ranking: { type: Number, default: 0 },
+  },
+  { timestamps: true, versionKey: false }
+)
 
-module.exports = mongoose.model('LocalModel', LocalSchema)
+export default mongoose.model('LocalModel', LocalSchema)

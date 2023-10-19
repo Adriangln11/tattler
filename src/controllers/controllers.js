@@ -1,4 +1,5 @@
-const LocalModel = require('../models/localmodel.js')
+import LocalModel from '../models/localmodel.js'
+
 const createLocal = async (req, res, next) => {
   const { name, location, stars, category, comments, open, close } = req.body
   const locationData = location.split(',')
@@ -136,7 +137,7 @@ const sort = async (req, res, next) => {
   }
 }
 
-module.exports = {
+export {
   createLocal,
   editLocal,
   deleteLocalbyName,

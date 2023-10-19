@@ -1,7 +1,7 @@
-const router = require('express').Router()
-const passport = require('passport')
+import { Router } from 'express'
+import passport from 'passport'
 
-const {
+import {
   createLocal,
   editLocal,
   deleteLocalbyName,
@@ -9,8 +9,9 @@ const {
   filter,
   sort,
   deleteLocalById,
-} = require('../controllers/controllers.js')
+} from '../controllers/controllers.js'
 
+const router = Router()
 router
   //*GET
   .get(
@@ -101,4 +102,4 @@ router
     })
   )
 
-module.exports = router
+export default router
